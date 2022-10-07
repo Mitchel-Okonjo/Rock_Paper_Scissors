@@ -14,6 +14,23 @@ function getComputerChoice() {
     return choice;
 }
 
-console.log(getComputerChoice());
-console.log(getComputerChoice());
-console.log(getComputerChoice());
+function playRound(computerSelection, playerSelection) {
+    if (computerSelection === "ROCK" && playerSelection === "SCISSORS") {
+        return "You lose! Rock beats Scissors";
+    }
+    else if (computerSelection === "SCISSORS" && playerSelection === "PAPER") {
+        return "You lose! Scissors beats Paper";
+    }
+    else if (computerSelection === "PAPER" && playerSelection === "ROCK") {
+        return "You lose! Paper beats Rock";
+    }
+    else if (playerSelection === "ROCK" && computerSelection === "SCISSORS") {
+        return "You win! Rock beats Scissors";
+    }
+    else if (playerSelection === "SCISSORS" && computerSelection === "PAPER") {
+        return "You win! Scissors beats Paper";
+    }
+    else (playerSelection === "PAPER" && computerSelection === "ROCK") {
+        return "You win! Paper beats Rock";
+    }
+}
