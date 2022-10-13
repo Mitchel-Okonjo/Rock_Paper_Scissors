@@ -1,0 +1,96 @@
+body {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: beige;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 20px;
+}
+
+.header-left, .header-right {
+    display: flex;
+    gap: 12px;
+}
+
+
+h1 {
+    margin: 0px;
+}
+
+.score {
+    align-self: center;
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+}
+
+span {
+    flex: 0.5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-container {
+    gap: 50px;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.text {
+    flex-shrink: 0;
+    text-align: center;
+    font-size: 20px;
+}
+
+.header-text {
+    font-size: 32px;
+}
+
+.btn-yours {
+    height: 200px;
+    width: 200px;
+    font-size: 32px;
+    border-radius: 32px;
+    transition: all .07s ease;
+}
+
+.btn-computer {
+    height: 100px;
+    width: 100px;
+    font-size: 16px;
+    border-radius: 16px;
+}
+
+.score-text, .round-text {
+    font-size: 20px;
+}
+
+.score-btn, .round-btn{
+    border-radius: 8px;
+    width: 50px;
+    height: 25px;
+}
+
+.restart-btn {
+    width: 125px;
+    height: 40px;
+    border-radius: 16px;
+    font-size: 20px;
+}
+
+.playing {
+    transform: scale(1.1);
+    border-color: #ffc600;
+    box-shadow: 0 0 1rem #ffc600;
+  }
