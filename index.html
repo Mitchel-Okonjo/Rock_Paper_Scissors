@@ -5,22 +5,32 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
     <div class="header">
-        <h1>Click a button to Play!</h1>
-        <div>YOUR SCORE: </div>
+        <div class="header-left">
+            <div class="text score-text">SCORE</div>
+            <button class="score-btn">0</button>
+            <div class="round-text">ROUND</div>
+            <button class="btn round-btn">0</button>
+        </div>
+        <div class="header-right">
+            <button class="restart-btn">RESTART</button>
+        </div>
     </div>
+    <div class="text header-text">Click a selection to play!</div>
     <div class="content">
         <div class="text">Computer Selection</div>
-        <button class="btn btn-computer">?</button>
+        <span><button class="btn btn-computer">?</button></span>
         <div class="text">Your Selection</div>
         <div class="btn-container">
-            <button class="btn btn-rock">ROCK</button>
-            <button class="btn btn-paper">PAPER</button>
-            <button class="btn btn-scissors">SCISSORS</button>
+            <button class="btn btn-yours">ROCK</button>
+            <button class="btn btn-yours">PAPER</button>
+            <button class="btn btn-yours">SCISSORS</button>
         </div>
-        <div class=" text round-text">You have won this round.</div>
+        <div class=" text round-end-text">You have won this round.</div>
         <div class="text final-text">You have won the Game!</div>
     </div>
 </body>
