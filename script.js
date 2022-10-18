@@ -18,6 +18,7 @@ function getComputerChoice() {
 function removeTransition(e) {
     if (e.propertyName !== 'transform') return;
     e.target.classList.remove('playing');
+    e.target.classList.remove('computer-playing');
   }
 
   function playRound(computerSelection, playerSelection) {
