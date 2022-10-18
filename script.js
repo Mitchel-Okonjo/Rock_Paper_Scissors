@@ -113,5 +113,6 @@ const restart = document.querySelector('.restart-btn');
 playerOptions.forEach(option => option.addEventListener('click', () => option.classList.add('playing')));
 playerOptions.forEach(option => option.addEventListener('transitionend', removeTransition));
 playerOptions.forEach(option => option.addEventListener('click', playGame));
+restart.addEventListener('click', () => location.reload());
 
 
