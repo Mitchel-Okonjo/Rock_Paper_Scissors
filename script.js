@@ -64,6 +64,42 @@ function removeTransition(e) {
     
 }
 
+function playGame(e) {
+    if (round.textContent >= 5) {
+        if (score.textContent >= 3) {
+            gameStartText.textContent = "CLICK THE RESTART BUTTON TO PLAY AGAIN";
+        }
+        else {
+            gameStartText.texContent = "CLICK THE RESTART BUTTON TO PLAY AGAIN";
+            console.log(gameStartText.textContent);
+        }
+    }
+
+    else {
+        const computerChoice = getComputerChoice();
+        computerOptions.forEach(option => {if (computerChoice === option.textContent) {
+        option.classList.add('computer-playing');
+        option.addEventListener('transitionend', removeTransition);
+    }});
+
+    playRound (computerChoice, e.target.textContent);
+
+    }
+
+    if (round.textContent >= 5) {
+        if (score.textContent >= 3) {
+            gameStartText.textContent = "YOU HAVE WON THE GAME, :) CLICK RESTART TO PLAY AGAIN";
+        }
+        else {
+            gameStartText.texContent = "YOU HAVE LOST THE GAME, :( CLICK RESTART TO PLAY AGAIN";
+            console.log(score.textContent);
+            console.log(gameStartText.textContent);
+        }
+    }
+
+
+}
+
 const computerOptions = Array.from(document.querySelectorAll('.btn-computer'));
 const playerOptions = Array.from(document.querySelectorAll('.btn-yours'));
 const computerSelection = document.querySelector('.btn-computer');
