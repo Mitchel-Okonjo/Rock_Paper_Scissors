@@ -19,8 +19,9 @@ function removeTransition(e) {
     if (e.propertyName !== 'transform') return;
     e.target.classList.remove('playing');
   }
-const options = Array.from(document.querySelectorAll('.btn-yours'));
-options.forEach(option => option.addEventListener('click', () => option.classList.add('playing')));
-options.forEach(option => option.addEventListener('transitionend', removeTransition));
+
+const playerOptions = Array.from(document.querySelectorAll('.btn-yours'));
+playerOptions.forEach(option => option.addEventListener('click', () => option.classList.add('playing')));
+playerOptions.forEach(option => option.addEventListener('transitionend', removeTransition));
 
 
