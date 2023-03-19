@@ -1,118 +1,96 @@
 function getComputerChoice() {
-    let randInt = Math.floor(Math.random() * 3) + 1;
-    let choice;
-    if (randInt === 1) {
-        choice = "ROCK";
-    }
-    else if (randInt === 2) {
-        choice = "PAPER";
-    }
-    else {
-        choice = "SCISSORS";
-    }
-
-    return choice;
-}
-
-
-function removeTransition(e) {
-    if (e.propertyName !== 'transform') return;
-    e.target.classList.remove('playing');
-    e.target.classList.remove('computer-playing');
+  let randInt = Math.floor(Math.random() * 3) + 1;
+  let choice;
+  if (randInt === 1) {
+    choice = "ROCK";
+  } else if (randInt === 2) {
+    choice = "PAPER";
+  } else {
+    choice = "SCISSORS";
   }
 
-  function playRound(computerSelection, playerSelection) {
-    
-    if (computerSelection === "ROCK" && playerSelection === "SCISSORS") {
-        console.log("you lose");
-        round.textContent++;
-        roundEndText.textContent =  "You lose! Rock beats Scissors";
-    }
-    else if (computerSelection === "SCISSORS" && playerSelection === "PAPER") {
-        console.log("you lose");
-        round.textContent++;
-        roundEndText.textContent =  "You lose! Scissors beats Paper";
-    }
-    else if (computerSelection === "PAPER" && playerSelection === "ROCK") {
-        console.log("you lose");
-        round.textContent++;
-        roundEndText.textContent =  "You lose! Paper beats Rock";
-    }
-    else if (playerSelection === "ROCK" && computerSelection === "SCISSORS") {
-        console.log("you win");
-        round.textContent++;
-        score.textContent++;
-        roundEndText.textContent =  "You win! Rock beats Scissors";
-    }
-    else if (playerSelection === "SCISSORS" && computerSelection === "PAPER") {
-        console.log("you win");
-        round.textContent++;
-        score.textContent++;
-        roundEndText.textContent =  "You win! Scissors beats Paper";
-    }
-    else if (playerSelection === "PAPER" && computerSelection === "ROCK") {
-        console.log("you win");
-        round.textContent++;
-        score.textContent++;
-        roundEndText.textContent = "You win! Paper beats Rock";
-    }
-    else {
-        console.log("It's a tie!");
-        roundEndText.textContent = "It's a tie! click an option to continue playing.";
-    }
+  return choice;
+}
 
-    
+function removeTransition(e) {
+  if (e.propertyName !== "transform") return;
+  e.target.classList.remove("playing");
+  e.target.classList.remove("computer-playing");
+}
+
+function playRound(computerSelection, playerSelection) {
+  if (computerSelection === "ROCK" && playerSelection === "SCISSORS") {
+    round.textContent++;
+    roundEndText.textContent = "You lose! Rock beats Scissors";
+  } else if (computerSelection === "SCISSORS" && playerSelection === "PAPER") {
+    round.textContent++;
+    roundEndText.textContent = "You lose! Scissors beats Paper";
+  } else if (computerSelection === "PAPER" && playerSelection === "ROCK") {
+    round.textContent++;
+    roundEndText.textContent = "You lose! Paper beats Rock";
+  } else if (playerSelection === "ROCK" && computerSelection === "SCISSORS") {
+    round.textContent++;
+    score.textContent++;
+    roundEndText.textContent = "You win! Rock beats Scissors";
+  } else if (playerSelection === "SCISSORS" && computerSelection === "PAPER") {
+    round.textContent++;
+    score.textContent++;
+    roundEndText.textContent = "You win! Scissors beats Paper";
+  } else if (playerSelection === "PAPER" && computerSelection === "ROCK") {
+    round.textContent++;
+    score.textContent++;
+    roundEndText.textContent = "You win! Paper beats Rock";
+  } else {
+    roundEndText.textContent =
+      "It's a tie! click an option to continue playing.";
+  }
 }
 
 function playGame(e) {
-    if (round.textContent >= 5) {
-        if (score.textContent >= 3) {
-            gameStartText.textContent = "CLICK THE RESTART BUTTON TO PLAY AGAIN";
-        }
-        else {
-            gameStartText.texContent = "CLICK THE RESTART BUTTON TO PLAY AGAIN";
-            console.log(gameStartText.textContent);
-        }
+  if (round.textContent >= 5) {
+    if (score.textContent >= 3) {
+      gameStartText.textContent = "CLICK THE RESTART BUTTON TO PLAY AGAIN";
+    } else {
+      gameStartText.texContent = "CLICK THE RESTART BUTTON TO PLAY AGAIN";
     }
+  } else {
+    const computerChoice = getComputerChoice();
+    computerOptions.forEach((option) => {
+      if (computerChoice === option.textContent) {
+        option.classList.add("computer-playing");
+        option.addEventListener("transitionend", removeTransition);
+      }
+    });
 
-    else {
-        const computerChoice = getComputerChoice();
-        computerOptions.forEach(option => {if (computerChoice === option.textContent) {
-        option.classList.add('computer-playing');
-        option.addEventListener('transitionend', removeTransition);
-    }});
+    playRound(computerChoice, e.target.textContent);
+  }
 
-    playRound (computerChoice, e.target.textContent);
-
+  if (round.textContent >= 5) {
+    if (score.textContent >= 3) {
+      gameStartText.textContent =
+        "YOU HAVE WON THE GAME, :) CLICK RESTART TO PLAY AGAIN";
+    } else {
+      gameStartText.texContent =
+        "YOU HAVE LOST THE GAME, :( CLICK RESTART TO PLAY AGAIN";
     }
-
-    if (round.textContent >= 5) {
-        if (score.textContent >= 3) {
-            gameStartText.textContent = "YOU HAVE WON THE GAME, :) CLICK RESTART TO PLAY AGAIN";
-        }
-        else {
-            gameStartText.texContent = "YOU HAVE LOST THE GAME, :( CLICK RESTART TO PLAY AGAIN";
-            console.log(score.textContent);
-            console.log(gameStartText.textContent);
-        }
-    }
-
-
+  }
 }
 
-const computerOptions = Array.from(document.querySelectorAll('.btn-computer'));
-const playerOptions = Array.from(document.querySelectorAll('.btn-yours'));
-const computerSelection = document.querySelector('.btn-computer');
-const gameEndText = document.querySelector('.game-end-text');
-const gameStartText = document.querySelector('.game-start-text');
-const score = document.querySelector('.score-btn');
-const round = document.querySelector('.round-btn');
-const roundEndText = document.querySelector('.round-end-text');
-const restart = document.querySelector('.restart-btn');
+const computerOptions = Array.from(document.querySelectorAll(".btn-computer"));
+const playerOptions = Array.from(document.querySelectorAll(".btn-yours"));
+const computerSelection = document.querySelector(".btn-computer");
+const gameEndText = document.querySelector(".game-end-text");
+const gameStartText = document.querySelector(".game-start-text");
+const score = document.querySelector(".score-btn");
+const round = document.querySelector(".round-btn");
+const roundEndText = document.querySelector(".round-end-text");
+const restart = document.querySelector(".restart-btn");
 
-playerOptions.forEach(option => option.addEventListener('click', () => option.classList.add('playing')));
-playerOptions.forEach(option => option.addEventListener('transitionend', removeTransition));
-playerOptions.forEach(option => option.addEventListener('click', playGame));
-restart.addEventListener('click', () => location.reload());
-
-
+playerOptions.forEach((option) =>
+  option.addEventListener("click", () => option.classList.add("playing"))
+);
+playerOptions.forEach((option) =>
+  option.addEventListener("transitionend", removeTransition)
+);
+playerOptions.forEach((option) => option.addEventListener("click", playGame));
+restart.addEventListener("click", () => location.reload());
