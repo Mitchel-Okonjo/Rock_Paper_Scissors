@@ -1,41 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
-</head>
-<body>
-    <div class="header">
-        <div class="header-left">
-            <div class="text score-text">SCORE</div>
-            <button class="score-btn">0</button>
-            <div class="round-text">ROUNDS PLAYED</div>
-            <button class="btn round-btn">0</button>
-        </div>
-        <div class="header-right">
-            <button class="restart-btn">RESTART</button>
-        </div>
-    </div>
-    <div class="text game-start-text">Select an option to play</div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rock-Paper-Scissors</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="header">Rock-Paper-Scissors</div>
     <div class="content">
-        <div class="text">Computer Selection</div>
-            <span>
-                <button class="btn btn-computer">ROCK</button>
-                <button class="btn btn-computer">PAPER</button>
-                <button class="btn btn-computer">SCISSORS</button>
-            </span>
-        <div class="text">Your Selection</div>
-        <div class="btn-container second">
-            <button class="btn btn-yours">ROCK</button>
-            <button class="btn btn-yours">PAPER</button>
-            <button class="btn btn-yours">SCISSORS</button>
+      <div class="message">
+        <div class="main-message">Choose your weapon</div>
+        <div class="sub-message">First to get to 5 wins!</div>
+      </div>
+      <div class="score-board">
+        <div class="player">
+          <img src="images/question-mark.png" alt="Question mark" />
+          <div class="score-count player-score">Player: 0</div>
         </div>
-        <div class="text round-end-text"></div>
-        <div class="text game-end-text"></div>
+
+        <div class="computer">
+          <img src="images/question-mark.png" alt="Quesion mark" />
+          <div class="score-count computer-score">Computer: 0</div>
+        </div>
+      </div>
+
+      <div class="pieces">
+        <img src="images/rock.png" alt="rock image" class="piece" />
+        <img
+          src="images/paper-scroll.png"
+          alt="paper scroll image"
+          class="piece"
+        />
+        <img src="images/scissors.png" alt="scissors image" class="piece" />
+      </div>
     </div>
-</body>
+  </body>
 </html>
