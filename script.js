@@ -1,96 +1,179 @@
-function getComputerChoice() {
-  let randInt = Math.floor(Math.random() * 3) + 1;
-  let choice;
-  if (randInt === 1) {
-    choice = "ROCK";
-  } else if (randInt === 2) {
-    choice = "PAPER";
-  } else {
-    choice = "SCISSORS";
-  }
+const displayController = (() => {
+  const choices = document.querySelectorAll('.piece');
+  const playerChoice = document.querySelector('.player-choice');
+  const computerChoice = document.querySelector('.computer-choice');
+  const playerScore = document.querySelector('.player-score');
+  const computerScore = document.querySelector('.computer-score');
+  const finalMessage = document.querySelector('.main-message');
 
-  return choice;
-}
+  choices.forEach((choice) => {
+    choice.addEventListener('click', (e) => {
+      if (gameController.checkGameOver()) {
+        restartGame();
+        return;
+      }
 
-function removeTransition(e) {
-  if (e.propertyName !== "transform") return;
-  e.target.classList.remove("playing");
-  e.target.classList.remove("computer-playing");
-}
+      const { gameArray, winner } = gameController.playRound(e);
 
-function playRound(computerSelection, playerSelection) {
-  if (computerSelection === "ROCK" && playerSelection === "SCISSORS") {
-    round.textContent++;
-    roundEndText.textContent = "You lose! Rock beats Scissors";
-  } else if (computerSelection === "SCISSORS" && playerSelection === "PAPER") {
-    round.textContent++;
-    roundEndText.textContent = "You lose! Scissors beats Paper";
-  } else if (computerSelection === "PAPER" && playerSelection === "ROCK") {
-    round.textContent++;
-    roundEndText.textContent = "You lose! Paper beats Rock";
-  } else if (playerSelection === "ROCK" && computerSelection === "SCISSORS") {
-    round.textContent++;
-    score.textContent++;
-    roundEndText.textContent = "You win! Rock beats Scissors";
-  } else if (playerSelection === "SCISSORS" && computerSelection === "PAPER") {
-    round.textContent++;
-    score.textContent++;
-    roundEndText.textContent = "You win! Scissors beats Paper";
-  } else if (playerSelection === "PAPER" && computerSelection === "ROCK") {
-    round.textContent++;
-    score.textContent++;
-    roundEndText.textContent = "You win! Paper beats Rock";
-  } else {
-    roundEndText.textContent =
-      "It's a tie! click an option to continue playing.";
-  }
-}
+      if (winner === true) {
+        updateChoices(gameArray);
+        displayMessage(true);
+        updatePlayerCount();
+      } else if (winner === false) {
+        updateChoices(gameArray);
+        displayMessage(false);
+        updateComputerCount();
+      } else {
+        updateChoices(gameArray);
+        displayMessage('tie');
+      }
 
-function playGame(e) {
-  if (round.textContent >= 5) {
-    if (score.textContent >= 3) {
-      gameStartText.textContent = "CLICK THE RESTART BUTTON TO PLAY AGAIN";
+      gameController.reset();
+    });
+  });
+
+  const displayMessage = (playerWon) => {
+    const player = playerChoice.getAttribute('alt');
+    const computer = computerChoice.getAttribute('alt');
+
+    if (playerWon === true) {
+      finalMessage.textContent = `You win! ${player} beats ${computer}`;
+    } else if (playerWon === false) {
+      finalMessage.textContent = `You lose! ${computer} beats ${player}`;
     } else {
-      gameStartText.texContent = "CLICK THE RESTART BUTTON TO PLAY AGAIN";
+      finalMessage.textContent = `It's a tie!`;
     }
-  } else {
-    const computerChoice = getComputerChoice();
-    computerOptions.forEach((option) => {
-      if (computerChoice === option.textContent) {
-        option.classList.add("computer-playing");
-        option.addEventListener("transitionend", removeTransition);
+  };
+
+  const updateChoices = (array) => {
+    if (!array) return;
+    const player = array[0];
+    const computer = array[1];
+    choices.forEach((choice) => {
+      if (Number(choice.dataset.piece) === player) {
+        updatePlayerChoice(choice);
+      }
+      if (Number(choice.dataset.piece) === computer) {
+        updateComputerChoice(choice);
       }
     });
+  };
 
-    playRound(computerChoice, e.target.textContent);
-  }
+  const updatePlayerChoice = (choice) => {
+    playerChoice.setAttribute('src', choice.getAttribute('src'));
+    playerChoice.setAttribute('alt', choice.getAttribute('alt'));
+  };
 
-  if (round.textContent >= 5) {
-    if (score.textContent >= 3) {
-      gameStartText.textContent =
-        "YOU HAVE WON THE GAME, :) CLICK RESTART TO PLAY AGAIN";
+  const updateComputerChoice = (choice) => {
+    computerChoice.setAttribute('src', choice.getAttribute('src'));
+    computerChoice.setAttribute('alt', choice.getAttribute('alt'));
+  };
+
+  const updatePlayerCount = () => {
+    const playerCount = gameController.updatePlayerCount();
+    playerScore.textContent = `Player: ${playerCount}`;
+  };
+
+  const updateComputerCount = () => {
+    const computerCount = gameController.updateComputerCount();
+    computerScore.textContent = `Computer: ${computerCount}`;
+  };
+
+  const restartGame = () => {
+    gameController.reset();
+    gameController.resetCounts();
+    finalMessage.textContent = 'Choose your weapon';
+    setDefault();
+  };
+
+  const setDefault = () => {
+    const defaultChoice = 'images/question-mark.png';
+    const defaultAlt = 'Question mark';
+    playerChoice.setAttribute('src', defaultChoice);
+    playerChoice.setAttribute('alt', defaultAlt);
+    computerChoice.setAttribute('src', defaultChoice);
+    computerChoice.setAttribute('alt', defaultAlt);
+
+    playerScore.textContent = 'Player: 0';
+    computerScore.textContent = 'Computer: 0';
+  };
+})();
+
+const gameController = (() => {
+  let gameArray = [];
+  let playerCount = 0;
+  let computerCount = 0;
+
+  const getComputerChoice = () => {
+    let randInt = Math.floor(Math.random() * 3) + 1;
+    if (randInt === 1) {
+      return 0;
+    } else if (randInt === 2) {
+      return 1;
     } else {
-      gameStartText.texContent =
-        "YOU HAVE LOST THE GAME, :( CLICK RESTART TO PLAY AGAIN";
+      return 2;
     }
-  }
-}
+  };
 
-const computerOptions = Array.from(document.querySelectorAll(".btn-computer"));
-const playerOptions = Array.from(document.querySelectorAll(".btn-yours"));
-const computerSelection = document.querySelector(".btn-computer");
-const gameEndText = document.querySelector(".game-end-text");
-const gameStartText = document.querySelector(".game-start-text");
-const score = document.querySelector(".score-btn");
-const round = document.querySelector(".round-btn");
-const roundEndText = document.querySelector(".round-end-text");
-const restart = document.querySelector(".restart-btn");
+  const getPlayerChoice = (choice) => {
+    const piece = choice.target;
+    return Number(piece.dataset.piece);
+  };
 
-playerOptions.forEach((option) =>
-  option.addEventListener("click", () => option.classList.add("playing"))
-);
-playerOptions.forEach((option) =>
-  option.addEventListener("transitionend", removeTransition)
-);
-playerOptions.forEach((option) => option.addEventListener("click", playGame));
-restart.addEventListener("click", () => location.reload());
+  const playRound = (playerChoice) => {
+    gameArray.push(getPlayerChoice(playerChoice));
+    gameArray.push(getComputerChoice());
+
+    if (gameArray[0] === gameArray[1]) {
+      const tie = 'tie';
+      return { gameArray, tie };
+    }
+
+    const winner = checkWinner(gameArray);
+    return { gameArray, winner };
+  };
+
+  const checkWinner = (gameArray) => {
+    const winCriteria = [
+      [1, 0],
+      [2, 1],
+      [0, 2],
+    ];
+
+    return winCriteria.some((array) => {
+      return array.every((value, index) => value === gameArray[index]);
+    });
+  };
+
+  const reset = () => {
+    gameArray = [];
+  };
+
+  const checkGameOver = () => {
+    if (playerCount === 5 || computerCount === 5) return true;
+  };
+
+  const updatePlayerCount = () => {
+    playerCount++;
+    return playerCount;
+  };
+
+  const updateComputerCount = () => {
+    computerCount++;
+    return computerCount;
+  };
+
+  const resetCounts = () => {
+    playerCount = 0;
+    computerCount = 0;
+  };
+
+  return {
+    playRound,
+    reset,
+    checkGameOver,
+    updatePlayerCount,
+    updateComputerCount,
+    resetCounts,
+  };
+})();

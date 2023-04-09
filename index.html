@@ -16,25 +16,40 @@
       </div>
       <div class="score-board">
         <div class="player">
-          <img src="images/question-mark.png" alt="Question mark" />
+          <img
+            src="images/question-mark.png"
+            alt="Question mark"
+            class="player-choice"
+          />
           <div class="score-count player-score">Player: 0</div>
         </div>
 
         <div class="computer">
-          <img src="images/question-mark.png" alt="Quesion mark" />
+          <img
+            src="images/question-mark.png"
+            alt="Quesion mark"
+            class="computer-choice"
+          />
           <div class="score-count computer-score">Computer: 0</div>
         </div>
       </div>
 
       <div class="pieces">
-        <img src="images/rock.png" alt="rock image" class="piece" />
+        <img src="images/rock.png" alt="rock" class="piece" data-piece="0" />
         <img
           src="images/paper-scroll.png"
-          alt="paper scroll image"
+          alt="paper"
           class="piece"
+          data-piece="1"
         />
-        <img src="images/scissors.png" alt="scissors image" class="piece" />
+        <img
+          src="images/scissors.png"
+          alt="scissors"
+          class="piece"
+          data-piece="2"
+        />
       </div>
     </div>
   </body>
+  <script src="script.js"></script>
 </html>
