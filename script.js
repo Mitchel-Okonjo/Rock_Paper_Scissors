@@ -9,7 +9,7 @@ const displayController = (() => {
 
   choices.forEach((choice) => {
     choice.addEventListener('click', (e) => {
-      //If game is over, Restart.
+      //If game is over, Restart
       if (gameController.checkGameOver()) {
         restartGame();
         return;
@@ -17,6 +17,7 @@ const displayController = (() => {
 
       const { gameArray, winner } = gameController.playRound(e);
 
+      // Check outcome of each round and display corresponding message
       if (winner === true) {
         updateChoices(gameArray);
         displayMessage(true);
@@ -30,6 +31,7 @@ const displayController = (() => {
         displayMessage('tie');
       }
 
+      // Reset game array variable
       gameController.reset();
     });
   });
