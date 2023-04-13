@@ -1,4 +1,5 @@
 const displayController = (() => {
+  // Declare DOM variables
   const choices = document.querySelectorAll('.piece');
   const playerChoice = document.querySelector('.player-choice');
   const computerChoice = document.querySelector('.computer-choice');
@@ -8,6 +9,7 @@ const displayController = (() => {
 
   choices.forEach((choice) => {
     choice.addEventListener('click', (e) => {
+      //If game is over, Restart.
       if (gameController.checkGameOver()) {
         restartGame();
         return;
@@ -32,6 +34,7 @@ const displayController = (() => {
     });
   });
 
+  // Display game update message during play
   const displayMessage = (playerWon) => {
     const player = playerChoice.getAttribute('alt');
     const computer = computerChoice.getAttribute('alt');
@@ -45,6 +48,7 @@ const displayController = (() => {
     }
   };
 
+  // Display computer and player choices based on selection
   const updateChoices = (array) => {
     if (!array) return;
     const player = array[0];
@@ -59,21 +63,25 @@ const displayController = (() => {
     });
   };
 
+  // Display player choice
   const updatePlayerChoice = (choice) => {
     playerChoice.setAttribute('src', choice.getAttribute('src'));
     playerChoice.setAttribute('alt', choice.getAttribute('alt'));
   };
 
+  // Display computer choice
   const updateComputerChoice = (choice) => {
     computerChoice.setAttribute('src', choice.getAttribute('src'));
     computerChoice.setAttribute('alt', choice.getAttribute('alt'));
   };
 
+  // Display player score
   const updatePlayerCount = () => {
     const playerCount = gameController.updatePlayerCount();
     playerScore.textContent = `Player: ${playerCount}`;
   };
 
+  // Display computer Score
   const updateComputerCount = () => {
     const computerCount = gameController.updateComputerCount();
     computerScore.textContent = `Computer: ${computerCount}`;
@@ -86,6 +94,7 @@ const displayController = (() => {
     setDefault();
   };
 
+  // Reset display
   const setDefault = () => {
     const defaultChoice = 'images/question-mark.png';
     const defaultAlt = 'Question mark';
@@ -104,6 +113,7 @@ const gameController = (() => {
   let playerCount = 0;
   let computerCount = 0;
 
+  // Get computer choice at random
   const getComputerChoice = () => {
     let randInt = Math.floor(Math.random() * 3) + 1;
     if (randInt === 1) {
@@ -115,11 +125,13 @@ const gameController = (() => {
     }
   };
 
+  // Get player choice
   const getPlayerChoice = (choice) => {
     const piece = choice.target;
     return Number(piece.dataset.piece);
   };
 
+  // Conduct one game round
   const playRound = (playerChoice) => {
     gameArray.push(getPlayerChoice(playerChoice));
     gameArray.push(getComputerChoice());
@@ -133,6 +145,7 @@ const gameController = (() => {
     return { gameArray, winner };
   };
 
+  // Determine if the player won the game
   const checkWinner = (gameArray) => {
     const winCriteria = [
       [1, 0],
@@ -149,20 +162,24 @@ const gameController = (() => {
     gameArray = [];
   };
 
+  // check if the player or computer has won the game
   const checkGameOver = () => {
     if (playerCount === 5 || computerCount === 5) return true;
   };
 
+  // Update player score count
   const updatePlayerCount = () => {
     playerCount++;
     return playerCount;
   };
 
+  // Update computer score count
   const updateComputerCount = () => {
     computerCount++;
     return computerCount;
   };
 
+  // Reset both player and computer score counts
   const resetCounts = () => {
     playerCount = 0;
     computerCount = 0;
